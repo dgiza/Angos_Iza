@@ -13,6 +13,6 @@
     <color name="colorNumBtnTxt">#333333</color>
 
     <!--Colores del botón Igual-->
-    <color name="colorIgBtnBG">#ec7701</color>
+    <color name="colorIgBtnBG">#079EAC</color>
     <color name="colorIgBtnTxt">#333333</color>
 </resources>
