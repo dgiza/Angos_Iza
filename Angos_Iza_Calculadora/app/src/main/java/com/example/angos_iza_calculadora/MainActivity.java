@@ -4,20 +4,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import android.os.Bundle;
-import android.view.View;
+
 
 import com.example.angos_iza_calculadora.databinding.ActivityMainBinding;
+import com.example.angos_iza_calculadora.databinding.ActivityMainBindingImpl;
 
 
 import java.text.DecimalFormat;
 
 public class MainActivity extends AppCompatActivity {
 
-private ActivityMainBinding binding;
+    private ActivityMainBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding=DataBindingUtil.setContentView(this, R.layout.activity_main);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        binding.setLifecycleOwner(this);
 
     }
     private double Valor1= Double.NaN;
@@ -31,5 +33,8 @@ private ActivityMainBinding binding;
     private char CURRENT_ACTION;
 
     DecimalFormat decimalFormat =new DecimalFormat("#.##########");
+
+
+
 
 }
