@@ -1,0 +1,2 @@
+rootProject.name='Calculator_Iza_Angos'
+include ':app'
