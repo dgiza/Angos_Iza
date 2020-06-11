@@ -36,7 +36,7 @@
 	    <string name="main_btn_plusMinus">±</string>
 	    <string name="main_btn_square">√</string>
 	    <string name="main_btn_percentage">%</string>
-	    <string name="main_btn_derivate">1/x</string>
+	    <string name="main_btn_derivate">!</string>
 	    <string name="main_btn_equal">=</string>
 	    <string name="main_btn_menu">\u2507</string>
 	    <string name="main_btn_elevated">x²</string>

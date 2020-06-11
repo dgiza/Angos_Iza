@@ -51,15 +51,19 @@ public class ActivityMain extends Activity
         // Se obtiene una referencia a la pantalla de la calculadora de tipo CalculatorLCD:
         LCD = (CalculatorLCD)findViewById(R.id.main_CalculatorLCD);
 
-        // Se carga la Clase de configuraciones y se obtienen un HashMap que contiene la mayoria de propiedades de la clase ActivityMain.
+        // Se carga la Clase de configuraciones y se obtienen un HashMap que contiene la mayoria de
+        // propiedades de la clase ActivityMain.
         setting = new SettingsCalc(this);
         HashMap< String, Object > hm = SettingsCalc.getData();
 
-        // Una de las configuraciones que permite la clase de configuración es establecer si se quiere la barra de notificaciones o no:
+        // Una de las configuraciones que permite la clase de configuración es establecer si
+        // se quiere la barra de notificaciones o no:
         if( !SettingsCalc.isShowNotificationBar() )
             this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        // También, si el usuario ha indicado que quiere guardar la ultima operación realizada (aun incluso si apaga el móvil), se cargan todas las propiedades de la clase (las del HashMap).
+        // También, si el usuario ha indicado que quiere guardar la ultima operación realizada
+        // (aun incluso si apaga el móvil), se cargan todas las propiedades de la clase
+        // (las del HashMap).
         if( SettingsCalc.isRememberLastResult() && hm.size() > 0 )
         {
             LCD.setMemory((Boolean)hm.get("LCDgetMemory"));
@@ -75,10 +79,16 @@ public class ActivityMain extends Activity
 
 
     /**
-     * Para modificar desde java los Controles del XML antes se deben de haber creado en pantalla. Desde el método onWindowsFocusChanged se puede hacer:
-     * Expande los botones de la calculadora para que ocupen toda la pantalla. Ante la imposibilidad de ajustar el tamaño de los botones desde el XML se ha tenido que recurrir a realizar ese ajuste en tiempo de ejecución desde un método llamado desde el onCreate. Dicho método calcula el tamaño de la
-     * pantalla y la posición en la que se encuentra, de este modo, y sabiendo de antemano el numero de filas y columnas, se reparte la pantalla entre todos los botones, en el caso del botón 0 e = el tamaño es el doble por lo que se ha tenido que tener en cuenta. Para recuperar todos los botones en
-     * vez de recuperarlos uno a uno de forma manual se ha hecho recuperando el layaut y después todos sus hijos.
+     * Para modificar desde java los Controles del XML antes se deben de haber creado en pantalla.
+     * Desde el método onWindowsFocusChanged se puede hacer:
+     * Expande los botones de la calculadora para que ocupen toda la pantalla. Ante la imposibilidad
+     * de ajustar el tamaño de los botones desde el XML se ha tenido que recurrir a realizar ese
+     * ajuste en tiempo de ejecución desde un método llamado desde el onCreate. Dicho método calcula
+     * el tamaño de la pantalla y la posición en la que se encuentra, de este modo, y sabiendo
+     * de antemano el numero de filas y columnas, se reparte la pantalla entre todos los botones,
+     * en el caso del botón 0 e = el tamaño es el doble por lo que se ha tenido que tener en cuenta.
+     * Para recuperar todos los botones en vez de recuperarlos uno a uno de forma manual
+     * se ha hecho recuperando el layaut y después todos sus hijos.
      */
     @Override
     public void onWindowFocusChanged(boolean hasFocus)
@@ -87,7 +97,8 @@ public class ActivityMain extends Activity
 
         if( hasFocus )
         {
-            // Una de las configuraciones que permite la clase de configuración es establecer si se quiere la barra de notificaciones o no:
+            // Una de las configuraciones que permite la clase de configuración es
+            // establecer si se quiere la barra de notificaciones o no:
             if( !SettingsCalc.isShowNotificationBar() )
                 this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
@@ -120,12 +131,14 @@ public class ActivityMain extends Activity
             LCDOperation.setTextSize(30);
 
 
-            // Por ultimo se recorren todos los hijos o controles contenidos en el layout del activity para ajustar el tamaño de los botones:
+            // Por ultimo se recorren todos los hijos o controles contenidos en el layout del
+            // activity para ajustar el tamaño de los botones:
             for( int count = 0 ; count < layout.getChildCount() ; count++ )
             {
                 View v = layout.getChildAt(count);
 
-                // Si el elemento actual, definido como de tipo View, es una instancia de un tipo Button se procederá a modificar sus dimensiones:
+                // Si el elemento actual, definido como de tipo View, es una instancia de un tipo
+                // Button se procederá a modificar sus dimensiones:
                 if( v instanceof Button )
                 {
                     Button vB = (Button)v;
@@ -153,7 +166,9 @@ public class ActivityMain extends Activity
 
 
     /**
-     * El metodo onRestoreInstanceState es llamado de forma automática cuando se restaura la aplicación. Al restaurarse se carga la información previamente guardada y se copia a las propiedades de la clase/pantalla.
+     * El metodo onRestoreInstanceState es llamado de forma automática cuando se restaura la
+     * aplicación. Al restaurarse se carga la información previamente guardada y se copia a las
+     * propiedades de la clase/pantalla.
      */
     @Override
     protected void onRestoreInstanceState(Bundle savedInstanceState)
@@ -173,7 +188,9 @@ public class ActivityMain extends Activity
 
 
     /**
-     * El método onSaveInstanceState se ejecuta de forma automática cuando la aplicación pasa a estar en segundo plano. En ese momento se guardan todas las propiedades de la clase, en un Bundle recibido por parámetro, antes de ser destruido.
+     * El método onSaveInstanceState se ejecuta de forma automática cuando la aplicación pasa a
+     * estar en segundo plano. En ese momento se guardan todas las propiedades de la clase,
+     * en un Bundle recibido por parámetro, antes de ser destruido.
      */
     @Override
     public void onSaveInstanceState(Bundle outState)
@@ -190,8 +207,10 @@ public class ActivityMain extends Activity
 
 
     /**
-     * Desde el método que destruye la activity se han de guardar las configuraciones. Pero esto solo
-     * se ha de realizar cuando la actividad vaya a ser destruida completamente (y no vaya a ser creada a continuación).
+     * Desde el método que destruye la activity se han de guardar las configuraciones.
+     * Pero esto solo
+     * se ha de realizar cuando la actividad vaya a ser destruida completamente
+     * (y no vaya a ser creada a continuación).
      */
     @Override
     protected void onDestroy()
@@ -245,7 +264,8 @@ public class ActivityMain extends Activity
                 Toast.makeText(this, getResources().getString(R.string.main_menu_message_copied), Toast.LENGTH_SHORT).show();
                 break;
 
-            // Si se pulsa pegar, se comprueba que el contenido del portapapeles sea un numero y se pega a la pantalla.
+            // Si se pulsa pegar, se comprueba que el contenido del portapapeles
+            // sea un numero y se pega a la pantalla.
             case R.id.main_menu_paste:
                 clip = clipboard.getPrimaryClip();
 
@@ -291,7 +311,8 @@ public class ActivityMain extends Activity
         ( (Vibrator)getSystemService(VIBRATOR_SERVICE) ).vibrate(SettingsCalc.getVibrationTime());
 
 
-        // Si la ultima tecla pulsada fue un Operador: Se pasa el numero en pantalla a la memoria, y se borra la pantalla.
+        // Si la ultima tecla pulsada fue un Operador: Se pasa el numero en pantalla a
+        // la memoria, y se borra la pantalla.
         if( "+-x/%".indexOf(lastKeyPressed) != -1 )
         {
             memoryLCD = LCD.getOperationBigDecimal();
@@ -315,15 +336,18 @@ public class ActivityMain extends Activity
         // Si no se ha superado el limite maximo de caracteres en pantalla, se escribe...
         if( textLCD.length() < numberCharacterLCD )
         {
-            // el texto del boton numerico, pero solo si en la pantalla hay un float0 y el boton pulsado no es la coma.
+            // el texto del boton numerico, pero solo si en la pantalla hay un float0 y el
+            // boton pulsado no es la coma.
             if( textLCD.equals("0") && !textBTN.equals(".") )
                 LCD.setOperation(textBTN);
 
-                // el propio texto de la pantalla y el del boton pulsado, pero solo si la pantalla no esta vacia, no hay ninguna coma en la pantalla y el boton pulsado es una coma.
+                // el propio texto de la pantalla y el del boton pulsado, pero solo si la pantalla
+                // no esta vacia, no hay ninguna coma en la pantalla y el boton pulsado es una coma.
             else if( !textLCD.isEmpty() && textLCD.indexOf(".") == -1 && textBTN.equals(".") )
                 LCD.setOperation(textLCD + textBTN);
 
-                // el propio texto de la pantalla y el del boton pulsado, pero solo si el boton pulsado no es una coma.
+                // el propio texto de la pantalla y el del boton pulsado, pero solo si el
+                // boton pulsado no es una coma.
             else if( !textBTN.equals(".") )
                 LCD.setOperation(textLCD + textBTN);
         }
@@ -377,19 +401,22 @@ public class ActivityMain extends Activity
             // Se elimina el ultimo caracter introducido por el usuario en la pantalla:
         else if( textBTN.equals("←") )
         {
-            // Solo si la pantalla tiene texto y la ultima tecla pulsada es numerica, la coma o la flcha de borrar:
+            // Solo si la pantalla tiene texto y la ultima tecla pulsada es numerica, la coma
+            // o la flcha de borrar:
             if( !textLCD.isEmpty() && "0123456789.←".indexOf(lastKeyPressed) != -1 )
             {
                 // Se borra el ultimo caracter.
                 String cadTemp = textLCD.substring(0, textLCD.length() - 1);
 
-                // Si la pantalla no esta vacia y lo que hay no es solo el signo negativo, se escribe en pantalla el texto. En el caso contrario, se escribe un float0.
+                // Si la pantalla no esta vacia y lo que hay no es solo el signo negativo,
+                // se escribe en pantalla el texto. En el caso contrario, se escribe un float0.
                 if( !cadTemp.equals("") && !cadTemp.equals("-") )
                     LCD.setOperation(cadTemp);
                 else
                     LCD.setOperation(new BigDecimal(0.0F));
 
-                // En el evento para los botones de memoria solo interesa guarda la ultima tecla pulsada en el caso de ser la de borrar un digito, el resto no.
+                // En el evento para los botones de memoria solo interesa guarda la ultima
+                // tecla pulsada en el caso de ser la de borrar un digito, el resto no.
                 lastKeyPressed = textBTN;
             }
         }
@@ -441,20 +468,24 @@ public class ActivityMain extends Activity
         }
 
 
-        // Divide por 1 el numero que haya en pantalla:
-        else if( textBTN.equals("1/x") )
-            LCD.setOperation(new BigDecimal(1.0F).divide(numLCD, 30, BigDecimal.ROUND_FLOOR));
+        // Determina el factorial de un número:
+        else if( textBTN.equals("!") )
+            LCD.setOperation(new BigDecimal(Factorial(numLCD.doubleValue())));
+
 
 
             // Se realiza la operacion + - x / %
         else if( "+-x/%".indexOf(textBTN) != -1 )
         {
-            // Se añade al historial el ultimo numero (solo una vez indistintamente de cuantas veces pulsemos a las teclas operador)
+            // Se añade al historial el ultimo numero (solo una vez indistintamente de cuantas
+            // veces pulsemos a las teclas operador)
             if( "0123456789.←=".indexOf(lastKeyPressed) != -1 )
                 LCD.addHistory(numLCD);
 
-            // Se realiza la operacion que ademas sera mostrada en pantalla solo si la memoria no estaba vacia, es decir, si se ha podido realizar una operacion:
-            if( memoryLCD.compareTo(new BigDecimal(0.0F)) != 0 && "+-x/%".indexOf(lastKeyPressed) == -1 )
+            // Se realiza la operacion que ademas sera mostrada en pantalla solo si la memoria
+            // no estaba vacia, es decir, si se ha podido realizar una operacion:
+            if( memoryLCD.compareTo(new BigDecimal(0.0F)) != 0
+                    && "+-x/%".indexOf(lastKeyPressed) == -1 )
                 LCD.setOperation(LCD.makeOperation(memoryLCD, lastOperator, numLCD));
 
             else if( lastKeyPressed.equals("=") )
@@ -468,11 +499,16 @@ public class ActivityMain extends Activity
         }
 
 
-        // Realiza la operacion con el numero guardado en memoria y el de la pantalla segun la operacion elegida:
+        // Realiza la operacion con el numero guardado en memoria y el de la pantalla segun la
+        // operacion elegida:
         else if( textBTN.equals("=") )
         {
-            // Si la memoria y la pantalla no estan vacias y el ultimo operador es uno de los indicados. Se escribe en la pantalla el resultado de la operacion y se borra la memoria y el historial.
-            if( memoryLCD.compareTo(new BigDecimal(0.0F)) != 0 && numLCD.compareTo(new BigDecimal(0.0F)) != 0 && "+-x/%".indexOf(lastOperator) != -1 )
+            // Si la memoria y la pantalla no estan vacias y el ultimo operador es uno de los
+            // indicados. Se escribe en la pantalla el resultado de la operacion y se borra
+            // la memoria y el historial.
+            if( memoryLCD.compareTo(new BigDecimal(0.0F)) != 0 &&
+                    numLCD.compareTo(new BigDecimal(0.0F)) != 0 &&
+                    "+-x/%".indexOf(lastOperator) != -1 )
             {
                 LCD.setOperation(LCD.makeOperation(memoryLCD, lastOperator, numLCD));
                 memoryLCD = new BigDecimal(0.0F);
@@ -492,8 +528,12 @@ public class ActivityMain extends Activity
     }
 
 
-
-
+    /**
+     * Método que calcula la raíz de un número en base a aproximaciones.
+     *
+     * @param entrada
+     * @return double x
+     */
     public double raices(double entrada)
     {
         double x=1.0;
@@ -506,8 +546,10 @@ public class ActivityMain extends Activity
     }
 
     /**
-     * Cuando se pulsa el boton de menu en la calculadora avanzada, se ejecutan una serie de eventos hasta que finalmente se crea el menu con las opciones.
-     * Primero el boton hace saltar el evento eventMemuButton(), este hace saltar a onCreateContextMenu() y este a su vez a onContextItemSelected().
+     * Cuando se pulsa el boton de menu en la calculadora avanzada, se ejecutan una serie de
+     * eventos hasta que finalmente se crea el menu con las opciones.
+     * Primero el boton hace saltar el evento eventMemuButton(), este hace saltar a
+     * onCreateContextMenu() y este a su vez a onContextItemSelected().
      *
      * @param view
      */
@@ -515,22 +557,28 @@ public class ActivityMain extends Activity
     {
         ( (Vibrator)getSystemService(VIBRATOR_SERVICE) ).vibrate(SettingsCalc.getVibrationTime());
 
-        registerForContextMenu(view); // Se agrega el boton que ha hecho saltar el evento a la lista de botones que pueden interactuar con el ContextMenu.
-        openContextMenu(view); // Despues se abre un ContextMenu y se pasa como parametro el boton que hizo saltar el evento.
+        registerForContextMenu(view); // Se agrega el boton que ha hecho saltar el evento a
+        // la lista de botones que pueden interactuar con el ContextMenu.
+        openContextMenu(view); // Despues se abre un ContextMenu y se pasa como parametro
+        // el boton que hizo saltar el evento.
     }
 
 
 
     /**
-     * El metodo onCreateContextMenu() se encarga de crear los diferentes menus. Segun el boton que hayamos pulsado deberemos de asignarle su menu correspondiente haciendo una comparacion de IDs entre el que se recibe como parametro y el que corresponda al boton que queramos.
-     * Asi podremos indicar que boton habre cada menu ya que aqui se han declarar todos los ContextMenu.
+     * El metodo onCreateContextMenu() se encarga de crear los diferentes menus. Segun el boton que
+     * hayamos pulsado deberemos de asignarle su menu correspondiente haciendo una comparacion
+     * de IDs entre el que se recibe como parametro y el que corresponda al boton que queramos.
+     * Asi podremos indicar que boton habre cada menu ya que aqui se han declarar
+     * todos los ContextMenu.
      */
     @Override
     public void onCreateContextMenu(ContextMenu menu, View view, ContextMenuInfo menuInfo)
     {
         super.onCreateContextMenu(menu, view, menuInfo);
 
-        // Si el id del view que se recibe por parametro es el mismo que el id del boton menu, entonces se infla el menu de opciones avanzadas.
+        // Si el id del view que se recibe por parametro es el mismo que el id del boton menu,
+        // entonces se infla el menu de opciones avanzadas.
         if( view.getId() == R.id.main_btn_menu )
         {
             MenuInflater inflater = getMenuInflater();
@@ -542,7 +590,9 @@ public class ActivityMain extends Activity
 
 
     /**
-     * Por ultimo el metodo onContextItemSelected() aplica la logica que queramos a cada item del ContextMenu. Para ello se compara el titulo del item y el del boton y si coinciden se ejecuta lo que corresponda.
+     * Por ultimo el método onContextItemSelected() aplica la logica que queramos a cada item del
+     * ContextMenu. Para ello se compara el titulo del item y el del boton y si coinciden
+     * se ejecuta lo que corresponda.
      */
     @Override
     public boolean onContextItemSelected(MenuItem item)
@@ -552,17 +602,20 @@ public class ActivityMain extends Activity
 
         if( item.getTitle().equals(getResources().getString(R.string.mathematical_menu_sin)) )
         {
-            LCD.setOperation(new BigDecimal(Math.sin(LCD.getOperationBigDecimal().doubleValue() * 2.0 * Math.PI / 360.0)));
+            LCD.setOperation(new BigDecimal(serieTaylorSeno(LCD.getOperationBigDecimal().doubleValue()
+                    * 2.0 * Math.PI / 360.0)));
             return true;
         }
         if( item.getTitle().equals(getResources().getString(R.string.mathematical_menu_cos)) )
         {
-            LCD.setOperation(new BigDecimal(Math.cos(LCD.getOperationBigDecimal().doubleValue() * 2.0 * Math.PI / 360.0)));
+            LCD.setOperation(new BigDecimal(serieTaylorCoseno(LCD.getOperationBigDecimal().doubleValue()
+                    * 2.0 * Math.PI / 360.0)));
             return true;
         }
         if( item.getTitle().equals(getResources().getString(R.string.mathematical_menu_tan)) )
         {
-            LCD.setOperation(new BigDecimal(Math.tan(LCD.getOperationBigDecimal().floatValue() * 2.0 * Math.PI / 360.0)));
+            LCD.setOperation(new BigDecimal(Math.tan(LCD.getOperationBigDecimal().floatValue() *
+                    2.0 * Math.PI / 360.0)));
             return true;
         }
         if( item.getTitle().equals(getResources().getString(R.string.mathematical_menu_pi)) )
@@ -576,4 +629,63 @@ public class ActivityMain extends Activity
         }
     }
 
+
+    /**
+     * Método que calcula el factorial de un número entero con recursividad.
+     *
+     * @param entrada
+     */
+    public static double Factorial(double entrada){
+        if(entrada<0){
+            return 0;
+        }
+        else{
+            if(entrada==0){
+                return 1;
+            }
+            else
+            {
+                return entrada*Factorial(entrada-1);
+            }
+        }
+    }
+
+    /**
+     * Método que calcula el coseno de un número usando series de Taylor.
+     * @param x
+     */
+    static double serieTaylorCoseno(double x) {
+
+        double sumando, sumatoria = 0, precision = 0.0001d;
+
+        // limite superior, iteracion de la sumatoria
+        int n = 0;
+
+        do {
+            sumando = Math.pow(-1, n) / Factorial(2*n) * Math.pow(x, 2 * n);
+            sumatoria = sumatoria + sumando;
+            n = n + 1;
+        } while (Math.abs(sumando) > precision);
+
+        return sumatoria;
+    }
+
+    /**
+     * Método que calcula el seno de un número usando series de Taylor.
+     * @param x
+     */
+    static double serieTaylorSeno(double x) {
+        double sumando, sumatoria = 0, precision = 0.0001d;
+
+        // limite superior, iteracion de la sumatoria
+        int n = 0;
+
+        do {
+            sumando = Math.pow(-1, n) / Factorial((2*n)+1) * Math.pow(x, (2 * n)+1);
+            sumatoria = sumatoria + sumando;
+            n = n + 1;
+        } while (Math.abs(sumando) > precision);
+
+        return sumatoria;
+    }
 }
