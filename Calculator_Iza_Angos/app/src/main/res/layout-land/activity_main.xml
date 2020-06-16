@@ -10,6 +10,17 @@
 
 
 	<!-- LINEA 1 -->
+	<Button
+		android:id="@+id/main_btn_ce2"
+		style="?android:attr/buttonStyleSmall"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_row="3"
+		android:layout_column="5"
+		android:onClick="eventMemoryButton"
+		android:text="@string/main_btn_ce"
+		android:textSize="20dp" />
+
 	<ec.edu.espe.programacion.calculator_iza_angos.CalculatorLCD
 		android:id="@+id/main_CalculatorLCD"
 		android:layout_width="fill_parent"
@@ -219,25 +230,14 @@
 		/>
 
 	<Button
-		android:id="@+id/main_btn_square"
-		style="?android:attr/buttonStyleSmall"
-		android:layout_column="5"
-		android:layout_row="3"
-		android:onClick="eventOperatorButton"
-		android:text="@string/main_btn_square"
-		android:textSize="20dp"
-		/>
-
-	<Button
 		android:id="@+id/main_btn_equal"
 		style="?android:attr/buttonStyleSmall"
-		android:layout_column="6"
 		android:layout_row="3"
 		android:layout_rowSpan="2"
+		android:layout_column="6"
 		android:onClick="eventOperatorButton"
 		android:text="@string/main_btn_equal"
-		android:textSize="20dp"
-		/>
+		android:textSize="20dp" />
 
 
 

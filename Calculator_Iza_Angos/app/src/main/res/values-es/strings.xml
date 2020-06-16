@@ -46,6 +46,11 @@
 	    <string name="mathematical_menu_cos">coseno</string>
 	    <string name="mathematical_menu_tan">tangente</string>
 	    <string name="mathematical_menu_pi">Pi</string>
+		<string name="mathematical_menu_convert_binary">Convertir a binario</string>
+		<string name="mathematical_menu_convert_decimal">Convertir a decimal</string>
+		<string name="mathematical_menu_convert_hexadecimal">Convertir a hexadecimal</string>
+		<string name="mathematical_menu_convert_octal">Convertir a octal</string>
+		<string name="mathematical_menu_raiz">√raíz</string>
 	    
 	<!-- Botones Main Menu -->	    
 	    <string name="main_menu_copy">Copiar</string>

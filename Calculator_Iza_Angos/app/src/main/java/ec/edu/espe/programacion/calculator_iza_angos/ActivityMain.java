@@ -33,6 +33,7 @@ public class ActivityMain extends Activity
     private Character		lastOperator		= ' ';					// Ultima operacion ( + - * / % ) realizada.
     private String			lastKeyPressed		= " ";					// El ultimo boton pulsado (no incluye todos, ver codigo)
     private Integer			numberCharacterLCD	= 16;
+    private Character       lastConvert         = 'd';
     SettingsCalc			setting;									// Clase de configuraciones que facilita ciertas propiedades, como la de vibracion, desde un fichero.
 
 
@@ -73,6 +74,7 @@ public class ActivityMain extends Activity
             memoryM = (BigDecimal)hm.get("memoryM");
             lastOperator = (Character)hm.get("lastOperator");
             lastKeyPressed = (String)hm.get("lastKeyPressed");
+            lastConvert = (Character)hm.get("lastConvert");
         }
     }
 
@@ -181,6 +183,8 @@ public class ActivityMain extends Activity
         lastKeyPressed = savedInstanceState.getString("lastKeyPressed");
         LCD.addHistory(savedInstanceState.getString("History"));
 
+        lastConvert = savedInstanceState.getChar("lastConvert");
+
         if( memoryM.compareTo(new BigDecimal(0.0F)) != 0 )
             LCD.setMemory(true);
     }
@@ -202,6 +206,8 @@ public class ActivityMain extends Activity
         outState.putChar("lastOperator", lastOperator);
         outState.putString("lastKeyPressed", lastKeyPressed);
         outState.putString("History", LCD.getHistory());
+
+        outState.putChar("lastConvert", lastConvert);
     }
 
 
@@ -227,6 +233,8 @@ public class ActivityMain extends Activity
             hm.put("memoryM", memoryM);
             hm.put("lastOperator", lastOperator);
             hm.put("lastKeyPressed", lastKeyPressed);
+
+            hm.put("lastConvert", lastConvert);
             SettingsCalc.setData(hm);
             setting.save();
         }
@@ -537,12 +545,12 @@ public class ActivityMain extends Activity
     public double raices(double entrada)
     {
         double x=1.0;
-        int k;
-        for(k = 1; k < 10; k++){
+
+        for(int k = 1; k < 10; k++){
             x = (x + entrada/x) / 2;
         }
-        return x;
 
+        return x;
     }
 
     /**
@@ -584,7 +592,6 @@ public class ActivityMain extends Activity
             MenuInflater inflater = getMenuInflater();
             inflater.inflate(R.menu.mathematical_menu, menu);
         }
-
     }
 
 
@@ -599,34 +606,87 @@ public class ActivityMain extends Activity
     {
         ( (Vibrator)getSystemService(VIBRATOR_SERVICE) ).vibrate(SettingsCalc.getVibrationTime());
 
+        int value = 0;
+        switch (lastConvert){
+            case 'b':
+                value = Integer.parseInt(Integer.toString(LCD.getOperationBigDecimal().intValue()), 2);
+                break;
+            case 'h':
+                value = Integer.parseInt(LCD.getOperationString(), 16);
+                break;
+            case 'o':
+                value = Integer.parseInt(Integer.toString(LCD.getOperationBigDecimal().intValue()), 8);
+                break;
+            default:
+                value = LCD.getOperationBigDecimal().intValue();
+                break;
+        }
 
-        if( item.getTitle().equals(getResources().getString(R.string.mathematical_menu_sin)) )
-        {
-            LCD.setOperation(new BigDecimal(serieTaylorSeno(LCD.getOperationBigDecimal().doubleValue()
-                    * 2.0 * Math.PI / 360.0)));
-            return true;
+        switch (item.getTitle().toString()){
+            case "Convert binary":
+                lastConvert = 'b';
+                LCD.clearHistory();
+                LCD.setOperation(Integer.toBinaryString(value));
+                LCD.addHistory("Dec: " + value + ", Hex: "+Integer.toHexString(value).toUpperCase() + ", Oct:"+Integer.toOctalString(value));
+
+                break;
+            case "Convert decimal":
+                lastConvert = 'd';
+                LCD.clearHistory();
+
+                LCD.setOperation(Integer.toString(value));
+                LCD.addHistory("Bin: " + Integer.toBinaryString(value) + ", Hex: "+Integer.toHexString(value).toUpperCase() + ", Oct:"+Integer.toOctalString(value));
+
+                break;
+            case "Convert hexadecimal":
+                lastConvert = 'h';
+                LCD.clearHistory();
+
+                LCD.setOperation(Integer.toHexString(value).toUpperCase());
+                LCD.addHistory("Bin: " + Integer.toBinaryString(value) + ", Dec: "+Integer.toHexString(value).toUpperCase() + ", Oct:"+Integer.toOctalString(value));
+
+                break;
+            case "Convert octal":
+                lastConvert = 'o';
+                LCD.clearHistory();
+
+                LCD.setOperation(Integer.toOctalString(value));
+                LCD.addHistory("Bin: " + Integer.toBinaryString(value) + ", Dec: "+ value + ", Hex:"+Integer.toHexString(value).toUpperCase());
+                break;
+
+            case "sin":
+                LCD.setOperation(new BigDecimal(serieTaylorSeno(LCD.getOperationBigDecimal().doubleValue()
+                        * 2.0 * Math.PI / 360.0)));
+                break;
+            case "cos":
+                LCD.setOperation(new BigDecimal(serieTaylorCoseno(LCD.getOperationBigDecimal().doubleValue()
+                        * 2.0 * Math.PI / 360.0)));
+                break;
+            case "tan":
+                LCD.setOperation(new BigDecimal(Math.tan(LCD.getOperationBigDecimal().floatValue() *
+                        2.0 * Math.PI / 360.0)));
+                break;
+            case "√sqrt":
+                if( LCD.getOperationBigDecimal().compareTo(new BigDecimal(0.0F)) == 1 )
+                {
+                    LCD.setOperation(new BigDecimal(raices(LCD.getOperationBigDecimal().doubleValue())));
+                    LCD.addHistory("sqrt(" + CalculatorLCD.removeDecimalEmpty(LCD.getOperationBigDecimal().doubleValue()) + ")");
+                }
+                break;
+            case "pi":
+                LCD.setOperation(new BigDecimal(Math.PI));
+                break;
+            case "Convert":
+                LCD.clearHistory();
+                LCD.addHistory("Bin: " + Integer.toBinaryString(Integer.valueOf(LCD.getOperationBigDecimal().intValue()))
+                        + ", Hex: "+Integer.toHexString(Integer.valueOf(LCD.getOperationBigDecimal().intValue())).toUpperCase()
+                        + ", Oct:"+Integer.toOctalString(Integer.valueOf(LCD.getOperationBigDecimal().intValue())));
+                break;
+            default:
+                return false;
         }
-        if( item.getTitle().equals(getResources().getString(R.string.mathematical_menu_cos)) )
-        {
-            LCD.setOperation(new BigDecimal(serieTaylorCoseno(LCD.getOperationBigDecimal().doubleValue()
-                    * 2.0 * Math.PI / 360.0)));
-            return true;
-        }
-        if( item.getTitle().equals(getResources().getString(R.string.mathematical_menu_tan)) )
-        {
-            LCD.setOperation(new BigDecimal(Math.tan(LCD.getOperationBigDecimal().floatValue() *
-                    2.0 * Math.PI / 360.0)));
-            return true;
-        }
-        if( item.getTitle().equals(getResources().getString(R.string.mathematical_menu_pi)) )
-        {
-            LCD.setOperation(new BigDecimal(Math.PI));
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+
+        return true;
     }
 
 
