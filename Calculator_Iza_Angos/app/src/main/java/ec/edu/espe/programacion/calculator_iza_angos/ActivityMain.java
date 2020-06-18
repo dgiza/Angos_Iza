@@ -470,6 +470,7 @@ public class ActivityMain extends Activity
         {
             if( LCD.getOperationBigDecimal().compareTo(new BigDecimal(0.0F)) == 1 )
             {
+
                 LCD.setOperation(new BigDecimal(raices(numLCD.doubleValue())));
                 LCD.addHistory("sqrt(" + CalculatorLCD.removeDecimalEmpty(numLCD.doubleValue()) + ")");
             }
@@ -535,23 +536,6 @@ public class ActivityMain extends Activity
         lastKeyPressed = textBTN;
     }
 
-
-    /**
-     * Método que calcula la raíz de un número en base a aproximaciones.
-     *
-     * @param entrada
-     * @return double x
-     */
-    public double raices(double entrada)
-    {
-        double x=1.0;
-
-        for(int k = 1; k < 10; k++){
-            x = (x + entrada/x) / 2;
-        }
-
-        return x;
-    }
 
     /**
      * Cuando se pulsa el boton de menu en la calculadora avanzada, se ejecutan una serie de
@@ -622,15 +606,15 @@ public class ActivityMain extends Activity
                 break;
         }
 
-        switch (item.getTitle().toString()){
-            case "Convert binary":
+        switch (item.getItemId()){
+            case R.id.mathematical_menu_convert_binary:
                 lastConvert = 'b';
                 LCD.clearHistory();
                 LCD.setOperation(Integer.toBinaryString(value));
                 LCD.addHistory("Dec: " + value + ", Hex: "+Integer.toHexString(value).toUpperCase() + ", Oct:"+Integer.toOctalString(value));
 
                 break;
-            case "Convert decimal":
+            case R.id.mathematical_menu_convert_decimal:
                 lastConvert = 'd';
                 LCD.clearHistory();
 
@@ -638,7 +622,7 @@ public class ActivityMain extends Activity
                 LCD.addHistory("Bin: " + Integer.toBinaryString(value) + ", Hex: "+Integer.toHexString(value).toUpperCase() + ", Oct:"+Integer.toOctalString(value));
 
                 break;
-            case "Convert hexadecimal":
+            case R.id.mathematical_menu_convert_hexadecimal:
                 lastConvert = 'h';
                 LCD.clearHistory();
 
@@ -646,7 +630,7 @@ public class ActivityMain extends Activity
                 LCD.addHistory("Bin: " + Integer.toBinaryString(value) + ", Dec: "+Integer.toHexString(value).toUpperCase() + ", Oct:"+Integer.toOctalString(value));
 
                 break;
-            case "Convert octal":
+            case R.id.mathematical_menu_convert_octal:
                 lastConvert = 'o';
                 LCD.clearHistory();
 
@@ -654,33 +638,27 @@ public class ActivityMain extends Activity
                 LCD.addHistory("Bin: " + Integer.toBinaryString(value) + ", Dec: "+ value + ", Hex:"+Integer.toHexString(value).toUpperCase());
                 break;
 
-            case "sin":
+            case R.id.mathematical_menu_sin:
                 LCD.setOperation(new BigDecimal(serieTaylorSeno(LCD.getOperationBigDecimal().doubleValue()
                         * 2.0 * Math.PI / 360.0)));
                 break;
-            case "cos":
+            case R.id.mathematical_menu_cos:
                 LCD.setOperation(new BigDecimal(serieTaylorCoseno(LCD.getOperationBigDecimal().doubleValue()
                         * 2.0 * Math.PI / 360.0)));
                 break;
-            case "tan":
+            case R.id.mathematical_menu_tan:
                 LCD.setOperation(new BigDecimal(Math.tan(LCD.getOperationBigDecimal().floatValue() *
                         2.0 * Math.PI / 360.0)));
                 break;
-            case "√sqrt":
+            case R.id.mathematical_menu_raiz:
                 if( LCD.getOperationBigDecimal().compareTo(new BigDecimal(0.0F)) == 1 )
                 {
                     LCD.setOperation(new BigDecimal(raices(LCD.getOperationBigDecimal().doubleValue())));
                     LCD.addHistory("sqrt(" + CalculatorLCD.removeDecimalEmpty(LCD.getOperationBigDecimal().doubleValue()) + ")");
                 }
                 break;
-            case "pi":
+            case R.id.mathematical_menu_pi:
                 LCD.setOperation(new BigDecimal(Math.PI));
-                break;
-            case "Convert":
-                LCD.clearHistory();
-                LCD.addHistory("Bin: " + Integer.toBinaryString(Integer.valueOf(LCD.getOperationBigDecimal().intValue()))
-                        + ", Hex: "+Integer.toHexString(Integer.valueOf(LCD.getOperationBigDecimal().intValue())).toUpperCase()
-                        + ", Oct:"+Integer.toOctalString(Integer.valueOf(LCD.getOperationBigDecimal().intValue())));
                 break;
             default:
                 return false;
@@ -747,5 +725,31 @@ public class ActivityMain extends Activity
         } while (Math.abs(sumando) > precision);
 
         return sumatoria;
+    }
+
+
+    /**
+     * Método que calcula la raíz de un número en base a aproximaciones.
+     *
+     * @param entrada
+     * @return double x
+     */
+    public double raices(double entrada)
+    {
+        double x=1.0;
+
+        if(entrada>=0){
+            for(int k = 1; k < 10; k++){
+                x = (x + entrada/x) / 2;
+            }
+
+            return x;
+        }
+        else
+        {
+            x=0;
+            return x;
+        }
+
     }
 }

@@ -275,7 +275,11 @@ public class CalculatorLCD extends GridLayout implements Serializable
                 result = num1.divide(num2, 10, BigDecimal.ROUND_FLOOR);
                 break;
             case '%':
-                result = num1.remainder(num2);
+                double resultado,n1,n2;
+                n1=num1.doubleValue();
+                n2=num2.doubleValue();
+                resultado=n1%n2;
+                result = new BigDecimal(resultado);
                 break;
 
             default:
