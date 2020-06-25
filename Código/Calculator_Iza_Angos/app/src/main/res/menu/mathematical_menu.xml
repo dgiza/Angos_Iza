@@ -23,29 +23,37 @@
         android:title="@string/mathematical_menu_raiz"
         android:orderInCategory="4"
         />
+    <item
+
+        android:id="@+id/mathematical_menu_Log"
+        android:title="Log"
+        android:orderInCategory="5"
+
+        />
 
     <item
         android:id="@+id/mathematical_menu_pi"
         android:title="@string/mathematical_menu_pi"
-        android:orderInCategory="5"
+        android:orderInCategory="6"
         />
 
     <item
         android:id="@+id/mathematical_menu_convert_binary"
-        android:orderInCategory="6"
+        android:orderInCategory="7"
         android:title="@string/mathematical_menu_convert_binary" />
 
     <item
         android:id="@+id/mathematical_menu_convert_decimal"
-        android:orderInCategory="6"
+        android:orderInCategory="7"
         android:title="@string/mathematical_menu_convert_decimal" />
     <item
         android:id="@+id/mathematical_menu_convert_hexadecimal"
-        android:orderInCategory="6"
+        android:orderInCategory="7"
         android:title="@string/mathematical_menu_convert_hexadecimal" />
     <item
         android:id="@+id/mathematical_menu_convert_octal"
-        android:orderInCategory="6"
+        android:orderInCategory="7"
         android:title="@string/mathematical_menu_convert_octal" />
+
 
 </menu>

@@ -40,6 +40,7 @@
     <string name="main_btn_equal">=</string>
     <string name="main_btn_menu">...</string>
     <string name="main_btn_elevated">x²</string>
+    <string name="main_btn_pow">^</string>
 
     <!-- Main Buttons Advanced Operations -->
     <string name="mathematical_menu_sin">sin</string>

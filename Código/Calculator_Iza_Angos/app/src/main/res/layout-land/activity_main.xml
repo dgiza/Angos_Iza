@@ -233,7 +233,6 @@
 		android:id="@+id/main_btn_equal"
 		style="?android:attr/buttonStyleSmall"
 		android:layout_row="3"
-		android:layout_rowSpan="2"
 		android:layout_column="6"
 		android:onClick="eventOperatorButton"
 		android:text="@string/main_btn_equal"

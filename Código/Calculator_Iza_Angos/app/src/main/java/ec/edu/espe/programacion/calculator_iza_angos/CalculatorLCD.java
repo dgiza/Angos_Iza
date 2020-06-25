@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.TextView;
@@ -137,7 +138,7 @@ public class CalculatorLCD extends GridLayout implements Serializable
 
 
         // Si al final del historial ya hay un operador (+ - x / %) se sustituye por el recibido como parametro. Si no lo hay o es distinto se imprime sin mas.
-        if( "+ - x / % ".indexOf(text.substring(index, lengthText)) != -1 )
+        if( "+ - x / % ^".indexOf(text.substring(index, lengthText)) != -1 )
 
             history.setText(text.substring(0, index) + operator + " ");
         else
@@ -260,6 +261,7 @@ public class CalculatorLCD extends GridLayout implements Serializable
     {
         BigDecimal result;
 
+
         switch( operator )
         {
             case '+':
@@ -275,11 +277,17 @@ public class CalculatorLCD extends GridLayout implements Serializable
                 result = num1.divide(num2, 10, BigDecimal.ROUND_FLOOR);
                 break;
             case '%':
-                double resultado,n1,n2;
-                n1=num1.doubleValue();
-                n2=num2.doubleValue();
-                resultado=n1%n2;
-                result = new BigDecimal(resultado);
+                int resultado,n1,n2;
+                n1=num1.intValue();
+                n2=num2.intValue();
+                result = new BigDecimal(modulo(n1,n2));
+                break;
+            case '^':
+                double r,e1,e2;
+                e1=num1.doubleValue();
+                e2=num2.doubleValue();
+                r=Math.pow(e1,e2);
+                result = new BigDecimal(r);
                 break;
 
             default:
@@ -288,5 +296,54 @@ public class CalculatorLCD extends GridLayout implements Serializable
         }
         return result;
     }
+    public int modulo(int divisor, int dividendo) {
+        int num = 0;
+        int aux;
+        if (divisor == dividendo) {
+            return 0;
+        }
+        if (divisor > 0 && dividendo > 0) {
+            if (divisor > dividendo) {
+                num = divisor % dividendo;
+            } else {
+                num = divisor;
+            }
+        } else {
+            if (divisor < 0 && dividendo < 0) {
+                divisor = divisor * (-1);
+                dividendo = dividendo * (-1);
+                if (divisor < dividendo) {
+                    num = divisor * (-1);
+                } else {
+                    num = divisor % dividendo;
+                }
 
+            } else {
+                if (divisor < 0 && dividendo > 0) {
+                    divisor = divisor * -1;
+                    num = divisor % dividendo;
+                    if (num == 0) {
+                        num = 0;
+                    } else {
+                        aux = dividendo - num;
+                        num = aux;
+                    }
+                } else {
+                    if (divisor > 0 && dividendo < 0) {
+                        dividendo = dividendo * -1;
+                        num = divisor % dividendo;
+                        if (num == 0) {
+                            num = 0;
+                        } else {
+                            aux = (dividendo - num) * -1;
+                            num = aux;
+                        }
+                    } else {
+                        return 0;
+                    }
+                }
+            }
+        }
+        return num;
+    }
 }

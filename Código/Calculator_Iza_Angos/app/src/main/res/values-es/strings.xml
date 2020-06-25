@@ -42,6 +42,7 @@
 	    <string name="main_btn_elevated">x²</string>
 		<string name="Graphics">GS</string>
 		<string name="Graphics2">GC</string>
+	<string name="main_btn_pow">^</string>
 
 	<!-- Botones Main Operaciones avanzadas -->	    
 	    <string name="mathematical_menu_sin">seno</string>

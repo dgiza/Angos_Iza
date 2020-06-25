@@ -276,11 +276,21 @@
     <Button
         android:id="@+id/main_btn_equal"
         style="?android:attr/buttonStyleSmall"
-        android:layout_rowSpan="2"
-        android:layout_row="5"
+        android:layout_width="wrap_content"
+        android:layout_height="38dp"
+        android:layout_row="6"
         android:layout_column="4"
         android:onClick="eventOperatorButton"
         android:text="@string/main_btn_equal"
+        android:textSize="20dp" />
+
+    <Button
+        android:id="@+id/main_btn_pow"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_row="5"
+        android:layout_column="4"
+        android:onClick="eventOperatorButton"
+        android:text="^"
         android:textSize="20dp" />
 
 
@@ -300,13 +310,12 @@
     <Button
         android:id="@+id/main_btn_0"
         style="?android:attr/buttonStyleSmall"
-        android:layout_column="0"
         android:layout_row="6"
+        android:layout_column="0"
         android:layout_columnSpan="2"
         android:onClick="eventNumericButton"
         android:text="@string/main_btn_0"
-        android:textSize="20dp"
-        />
+        android:textSize="20dp" />
 
     <Button
         android:id="@+id/main_btn_G"

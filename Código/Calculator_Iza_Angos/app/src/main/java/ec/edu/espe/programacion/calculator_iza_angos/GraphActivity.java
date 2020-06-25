@@ -10,7 +10,11 @@ import com.jjoe64.graphview.series.LineGraphSeries;
 
 public class GraphActivity extends AppCompatActivity {
     private LineGraphSeries<DataPoint> series1;
-
+    /**
+     * Evento que se realiza al pulsar las teclas numéricas y la coma.
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,7 +24,7 @@ public class GraphActivity extends AppCompatActivity {
         GraphView graph=(GraphView) findViewById(R.id.graph);
         series1= new LineGraphSeries<>();
         int NumDataPoints=250;
-        for(int i=0;i<NumDataPoints;i++){
+        for(int i=0;i<=NumDataPoints;i++){
             x=x+0.1;
             y=Math.sin(x);
             series1.appendData(new DataPoint(x,y),true,10000);
@@ -28,13 +32,13 @@ public class GraphActivity extends AppCompatActivity {
         // activate horizontal zooming and scrolling
         graph.getViewport().setScalable(true);
 
-// activate horizontal scrolling
+        // activate horizontal scrolling
         graph.getViewport().setScrollable(true);
 
-// activate horizontal and vertical zooming and scrolling
+        // activate horizontal and vertical zooming and scrolling
         graph.getViewport().setScalableY(true);
 
-// activate vertical scrolling
+        // activate vertical scrolling
         graph.getViewport().setScrollableY(true);
         graph.getGridLabelRenderer().setHorizontalAxisTitle("Eje X Función Seno");
         graph.getGridLabelRenderer().setVerticalAxisTitle("Eje Y Función Seno");

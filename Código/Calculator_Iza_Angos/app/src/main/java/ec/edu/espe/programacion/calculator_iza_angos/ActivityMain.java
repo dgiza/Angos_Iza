@@ -35,10 +35,10 @@ public class ActivityMain extends Activity
     private Integer			numberCharacterLCD	= 16;
     private Character       lastConvert         = 'd';
     SettingsCalc			setting;									// Clase de configuraciones que facilita ciertas propiedades, como la de vibracion, desde un fichero.
+    Button                  graficos;                                   //Botón que sirve como instancia para la gráfica del seno
+    Button                  graficos2;                                  //Botón que sirve como instancia para la gráfica del seno
 
 
-Button graficos;
-Button graficos2;
     /**
      * En el momento de crearse el activity se carga en pantalla el layaout, después las referencias y configuraciones.
      */
@@ -339,7 +339,7 @@ Button graficos2;
 
         // Si la ultima tecla pulsada fue un Operador: Se pasa el numero en pantalla a
         // la memoria, y se borra la pantalla.
-        if( "+-x/%".indexOf(lastKeyPressed) != -1 )
+        if( "+-x/%^".indexOf(lastKeyPressed) != -1 )
         {
             memoryLCD = LCD.getOperationBigDecimal();
             LCD.clearOperation();
@@ -378,8 +378,6 @@ Button graficos2;
                 LCD.setOperation(textLCD + textBTN);
         }
     }
-
-
 
     /**
      * Evento que se realiza al pulsar alguna de las teclas relacionada con la memoria o pantalla.
@@ -463,8 +461,6 @@ Button graficos2;
 
     }
 
-
-
     /**
      * Evento que se realiza al pulsar alguna de las teclas de operador.
      *
@@ -497,12 +493,22 @@ Button graficos2;
 
         // Determina el factorial de un número:
         else if( textBTN.equals("!") )
-            LCD.setOperation(new BigDecimal(Factorial(numLCD.doubleValue())));
+            if(LCD.getOperationBigDecimal().doubleValue()<0)
+            {
+                LCD.addHistory("ERROR");
+                Toast toast = Toast.makeText(this, "Error factorial solo en numeros positivos", Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        else
+            {
+                LCD.setOperation(new BigDecimal(Factorial(numLCD.doubleValue())));
+
+            }
 
 
 
-            // Se realiza la operacion + - x / %
-        else if( "+-x/%".indexOf(textBTN) != -1 )
+            // Se realiza la operacion + - x / % ^
+        else if( "+-x/%^".indexOf(textBTN) != -1 )
         {
             // Se añade al historial el ultimo numero (solo una vez indistintamente de cuantas
             // veces pulsemos a las teclas operador)
@@ -512,7 +518,7 @@ Button graficos2;
             // Se realiza la operacion que ademas sera mostrada en pantalla solo si la memoria
             // no estaba vacia, es decir, si se ha podido realizar una operacion:
             if( memoryLCD.compareTo(new BigDecimal(0.0F)) != 0
-                    && "+-x/%".indexOf(lastKeyPressed) == -1 )
+                    && "+-x/%^".indexOf(lastKeyPressed) == -1 )
                 LCD.setOperation(LCD.makeOperation(memoryLCD, lastOperator, numLCD));
 
             else if( lastKeyPressed.equals("=") )
@@ -535,7 +541,7 @@ Button graficos2;
             // la memoria y el historial.
             if( memoryLCD.compareTo(new BigDecimal(0.0F)) != 0 &&
                     numLCD.compareTo(new BigDecimal(0.0F)) != 0 &&
-                    "+-x/%".indexOf(lastOperator) != -1 )
+                    "+-x/%^".indexOf(lastOperator) != -1 )
             {
                 LCD.setOperation(LCD.makeOperation(memoryLCD, lastOperator, numLCD));
                 memoryLCD = new BigDecimal(0.0F);
@@ -554,7 +560,6 @@ Button graficos2;
         lastKeyPressed = textBTN;
     }
 
-
     /**
      * Cuando se pulsa el boton de menu en la calculadora avanzada, se ejecutan una serie de
      * eventos hasta que finalmente se crea el menu con las opciones.
@@ -572,7 +577,6 @@ Button graficos2;
         openContextMenu(view); // Despues se abre un ContextMenu y se pasa como parametro
         // el boton que hizo saltar el evento.
     }
-
 
 
     /**
@@ -595,8 +599,6 @@ Button graficos2;
             inflater.inflate(R.menu.mathematical_menu, menu);
         }
     }
-
-
 
     /**
      * Por ultimo el método onContextItemSelected() aplica la logica que queramos a cada item del
@@ -669,22 +671,58 @@ Button graficos2;
                         2.0 * Math.PI / 360.0)));
                 break;
             case R.id.mathematical_menu_raiz:
-                if( LCD.getOperationBigDecimal().compareTo(new BigDecimal(0.0F)) == 1 )
-                {
-                    LCD.setOperation(new BigDecimal(raices(LCD.getOperationBigDecimal().doubleValue())));
-                    LCD.addHistory("sqrt(" + CalculatorLCD.removeDecimalEmpty(LCD.getOperationBigDecimal().doubleValue()) + ")");
-                }
+                //if( LCD.getOperationBigDecimal().compareTo(new BigDecimal(0.0F)) == 1 )
+              // {
+                    double valor;
+                    valor=LCD.getOperationBigDecimal().doubleValue();
+                    if(LCD.getOperationBigDecimal().doubleValue()<0)
+                    {
+                        LCD.addHistory("ERROR");
+                        Toast toast = Toast.makeText(this, "Error raíz solo en numeros mayores 0", Toast.LENGTH_SHORT);
+
+                        toast.show();
+                    }
+                    else
+                    {
+                        if(LCD.getOperationBigDecimal().doubleValue()==0)
+                        {
+                            LCD.setOperation(new BigDecimal("0"));
+                            LCD.addHistory("sqrt(" + CalculatorLCD.removeDecimalEmpty(valor) + ")");
+                        }
+                        else
+                        {
+                            LCD.setOperation(new BigDecimal(raices(LCD.getOperationBigDecimal().doubleValue())));
+                            LCD.addHistory("sqrt(" + CalculatorLCD.removeDecimalEmpty(valor) + ")");
+                        }
+
+                    }
+
+               // }
                 break;
             case R.id.mathematical_menu_pi:
                 LCD.setOperation(new BigDecimal(Math.PI));
                 break;
+
+            case R.id.mathematical_menu_Log:
+                if(LCD.getOperationBigDecimal().doubleValue()>0){
+                    LCD.setOperation(new BigDecimal(Math.log10(LCD.getOperationBigDecimal().doubleValue())));
+                }
+                else
+                {
+                    LCD.addHistory("ERROR");
+                    Toast toast = Toast.makeText(this, "Error Log solo en numeros mayores 0", Toast.LENGTH_SHORT);
+                    LCD.setOperation(new BigDecimal("0"));
+                    toast.show();
+                }
+
+                break;
+
             default:
                 return false;
         }
 
         return true;
     }
-
 
     /**
      * Método que calcula el factorial de un número entero con recursividad.
