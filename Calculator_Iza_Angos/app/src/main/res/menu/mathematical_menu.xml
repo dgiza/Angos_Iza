@@ -47,4 +47,5 @@
         android:id="@+id/mathematical_menu_convert_octal"
         android:orderInCategory="6"
         android:title="@string/mathematical_menu_convert_octal" />
+
 </menu>

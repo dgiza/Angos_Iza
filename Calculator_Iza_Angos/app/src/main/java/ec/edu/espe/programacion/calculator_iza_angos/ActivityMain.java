@@ -37,7 +37,8 @@ public class ActivityMain extends Activity
     SettingsCalc			setting;									// Clase de configuraciones que facilita ciertas propiedades, como la de vibracion, desde un fichero.
 
 
-
+Button graficos;
+Button graficos2;
     /**
      * En el momento de crearse el activity se carga en pantalla el layaout, después las referencias y configuraciones.
      */
@@ -48,6 +49,23 @@ public class ActivityMain extends Activity
         super.onCreate(savedInstanceState);
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.setContentView(R.layout.activity_main);
+
+        graficos=(Button) findViewById(R.id.main_btn_G);
+
+        graficos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ActivityMain.this,GraphActivity.class));
+            }
+        });
+
+        graficos2=(Button) findViewById(R.id.main_btn_GC);
+        graficos2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ActivityMain.this,ParametersGraphics.class));
+            }
+        });
 
         // Se obtiene una referencia a la pantalla de la calculadora de tipo CalculatorLCD:
         LCD = (CalculatorLCD)findViewById(R.id.main_CalculatorLCD);

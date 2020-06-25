@@ -40,6 +40,8 @@
 	    <string name="main_btn_equal">=</string>
 	    <string name="main_btn_menu">\u2507</string>
 	    <string name="main_btn_elevated">x²</string>
+		<string name="Graphics">GS</string>
+		<string name="Graphics2">GC</string>
 
 	<!-- Botones Main Operaciones avanzadas -->	    
 	    <string name="mathematical_menu_sin">seno</string>
