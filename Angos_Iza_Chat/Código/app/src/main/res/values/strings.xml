@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Espe Chat</string>
+    <string name="welcome_msg">Bienvenido!</string>
+    <string name="sign_out">Cerrar Sesión</string>
+    <string name="contacts_permission_rationale">Se requiere acceso a la información de la cuenta para iniciar sesión.</string>
+    <string name="invite_menu_label">Invitar</string>
+    <string name="invitation_message">Recomiéndanos</string>
+    <string name="invitation_cta">Call to action</string>
+    <string name="invitation_title">Friendly Chat Invite</string>
+    <string name="sign_in">Ingresar</string>
+    <string name="sign_up">Registrarse</string>
+    <string name="fresh_config"></string>
+    <string name="cause_crash"></string>
+    <string name="banner_ad_unit_id" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
+</resources>
