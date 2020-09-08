@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="org.espe.controlGastos">
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <application
+        android:name="com.orm.SugarApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:replace="android:icon"
+        android:fullBackupContent="true">
+        <meta-data
+            android:name="DATABASE"
+            android:value="my_finances.db" />
+        <meta-data
+            android:name="VERSION"
+            android:value="2" />
+        <meta-data
+            android:name="QUERY_LOG"
+            android:value="true" />
+        <meta-data
+            android:name="DOMAIN_PACKAGE_NAME"
+            android:value="edu.espe.controlGastos" />
+
+        <activity
+            android:name="edu.espe.controlGastos.views.MainActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="edu.espe.controlGastos.views.categories.ListCategoryActivity"
+            android:label="@string/title_activity_category"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.espe.controlGastos.views.MainActivity" />
+        </activity>
+        <activity
+            android:name="edu.espe.controlGastos.views.categories.NewCategoryActivity"
+            android:label="Nueva Categoría"
+            android:theme="@style/Theme.AppCompat.Light.Dialog.MinWidth" />
+        <activity
+            android:name="edu.espe.controlGastos.views.categories.EditCategoryActivity"
+            android:label="Editar Categoria"
+            android:theme="@style/Theme.AppCompat.Light.Dialog.MinWidth" />
+        <activity
+            android:name="edu.espe.controlGastos.views.categories.ListCategoryDialog"
+            android:label="Listar Categorias"
+            android:theme="@style/Theme.AppCompat.Light.Dialog.MinWidth" />
+        <activity
+            android:name="edu.espe.controlGastos.views.account.ListAccountActivity"
+            android:label="@string/title_activity_list_account"
+            android:parentActivityName="edu.espe.controlGastos.views.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.espe.controlGastos.views.MainActivity" />
+        </activity>
+        <activity
+            android:name="edu.espe.controlGastos.views.account.NewAccountActivity"
+            android:label="@string/title_activity_new_account"
+            android:parentActivityName="edu.espe.controlGastos.views.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.espe.controlGastos.views.MainActivity" />
+        </activity>
+        <activity
+            android:name="edu.espe.controlGastos.views.account.OverviewActivity"
+            android:label="@string/title_activity_overview"
+            android:parentActivityName="edu.espe.controlGastos.views.account.ListAccountActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.espe.controlGastos.views.account.ListAccountActivity" />
+        </activity>
+        <activity
+            android:name="edu.espe.controlGastos.views.account.EditAccountActivity"
+            android:label="@string/title_activity_edit_account"
+            android:parentActivityName="edu.espe.controlGastos.views.account.ListAccountActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.espe.controlGastos.views.account.ListAccountActivity" />
+        </activity>
+        <activity
+            android:name="edu.espe.controlGastos.views.transaction.NewTransactionActivity"
+            android:label="@string/title_activity_new_income"
+            android:parentActivityName="edu.espe.controlGastos.views.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.espe.controlGastos.views.MainActivity" />
+        </activity>
+        <activity
+            android:name="edu.espe.controlGastos.views.transaction.EditTransactionActivity"
+            android:label="@string/title_activity_edit_income"
+            android:parentActivityName="edu.espe.controlGastos.views.MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.espe.controlGastos.views.MainActivity" />
+        </activity>
+        <activity
+            android:name="edu.espe.controlGastos.views.budge.NewBudgetActivity"
+            android:label="Nuevo Presupuesto"
+            android:parentActivityName="edu.espe.controlGastos.views.MainActivity"
+            android:theme="@style/Theme.AppCompat.Light.Dialog.MinWidth">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="edu.espe.controlGastos.views.MainActivity" />
+        </activity>
+
+        <receiver
+            android:name="edu.espe.controlGastos.receivers.AddReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.evernote.android.job.ADD_JOB_CREATOR"/>
+            </intent-filter>
+        </receiver>
+
+    </application>
+
+</manifest>
